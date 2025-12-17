@@ -1,0 +1,71 @@
+ * {
+    font-family: Arial, Helvetica, sans-serif;
+ }
+
+ .to-do {
+    width: 250px;
+    border: 1px solid #888888;
+    border-radius: 5px;
+    padding: 10px 20px;
+    margin: 0 auto;
+    margin-top: 20vh;
+ }
+
+ .to-do-title {
+    font-size: 20px;
+    margin: 0;
+    padding: 5px 0;
+    text-align: center;
+ }
+
+ .add {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+ }
+
+ input {
+    width: 150px;
+    border-radius: 5px;
+    border: 1px solid #888888;
+ }
+
+ ul {
+    list-style-type: disc;
+    margin: 0;
+    padding: 0;
+    cursor: pointer;
+ }
+
+ li {
+    list-style-position: inside;
+    padding: 5px;
+    padding-left: 20px;
+    margin: 0;
+ }
+
+ button {
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+ }
+
+ .addBtn {
+    background-color: #002fff;
+ }
+
+ .delBtn {
+    background-color: #eb1717de;
+ }
+
+ .done {
+    text-decoration: line-through;
+ }
+
+ .task {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+ }
