@@ -1,47 +1,79 @@
+const tasks = [];
+
+function addTaskToList(text, done) {
+    return {
+        text: text,
+        done: done,
+    };
+};
+
 const taskInput = document.querySelector('#taskInput');
-const addBtn = document.querySelector('#addTask');
-const tasks = document.querySelector('#tasks');
+
+function addTask(taskInput, tasks) {
+    if ((taskInput.value) && (taskInput.value !== ' ')) {
+        tasks.push(addTaskToList(taskInput.value, false));
+        render(tasks);
+    }
+}
 
 taskInput.addEventListener('keydown', (event) => {
-    if ((event.key === "Enter") && ((taskInput.value) && (taskInput.value !== ' '))) {
-        tasks.append(createTask(taskInput.value));
-        taskInput.value = '';
+    if (event.key === "Enter") { 
+        addTask(taskInput, tasks);
     }
 });
 
+const addBtn = document.querySelector('#addTask');
 addBtn.addEventListener('click', () => {
-    if ((taskInput.value) && (taskInput.value !== ' ')) {
-        tasks.append(createTask(taskInput.value));
-        taskInput.value = '';
-    }
+    addTask(taskInput, tasks)
 });
 
-tasks.addEventListener('click', (event) => {
-    if (event.target.tagName === 'LI') {
-        event.target.classList.toggle('done');
-    }
-})
+function renderTask(task) {
+    const discDecorator = document.createElement('div');
+    discDecorator.classList.add('discDecorator');
 
-tasks.addEventListener('click', (event) => {
-    if (event.target.tagName === 'BUTTON') {
-        event.target.parentNode.remove();
-    }
-})
+    const taskName = document.createElement('p');
+    taskName.textContent = task.text;
+    taskName.classList.add('taskName');
+    if (task.done) {
+        taskName.classList.add('done');
+    };
 
-function createTask(text) {
-    const task = document.createElement('div');
-    const taskName = document.createElement('li');
     const delBtn = document.createElement('button');
-
-    task.className = 'task';
-    taskName.className = 'taskName';
-    delBtn.className = 'delBtn';
-
-    taskName.textContent = `${text}`;
     delBtn.textContent = 'Удалить'
+    delBtn.classList.add('btn');
+    delBtn.classList.add('delBtn');
 
-    task.append(taskName);
-    task.append(delBtn);
+    const taskElement = document.createElement('li');
+    taskElement.classList.add('task')
+    taskElement.append(discDecorator);
+    taskElement.append(taskName);
+    taskElement.append(delBtn);
 
-    return task;
+    return taskElement;
 }
+
+function render(tasks) {
+    taskListDOM.innerHTML = '';
+
+    tasks.forEach( (task, index) => {
+        const taskElement = renderTask(task);
+        taskElement.index = index;
+        taskListDOM.append(taskElement);
+    });
+
+    taskInput.value = '';
+};
+
+const taskListDOM = document.querySelector('#tasks');
+taskListDOM.addEventListener('click', (event) => {
+    const taskIndex = event.target.parentElement.index;
+    if (event.target.tagName === 'BUTTON') {
+        tasks.splice(taskIndex, 1);
+        render(tasks);
+    };
+
+    if (event.target.tagName === 'P') {
+        tasks[taskIndex].done = !(tasks[taskIndex].done);
+        render(tasks);
+    }
+})
